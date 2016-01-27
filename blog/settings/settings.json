@@ -1,0 +1,10 @@
+{
+    "DB_NAME": "django-node",
+    "DB_USER": "daniel",
+    "DB_PASSWORD": "daniel",
+
+    "URL_SITE": "http://127.0.0.1:8000",
+    "SECRET_KEY": "my_super_secret_key",
+    "WORKON_HOME": "/home/{user}/.envs",
+    "ENV": "django_1_8"
+}
