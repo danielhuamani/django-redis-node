@@ -7,6 +7,7 @@ from .models import Noticia
 from .forms import NoticiaForm
 from django.contrib.auth.decorators import login_required
 import redis
+import json
 
 
 def home(request):
@@ -24,11 +25,20 @@ def listado_paginas(request):
 def crear_pagina(request):
     ''' Vista para crear un entradas'''
     r = redis.StrictRedis(host='localhost', port=6379, db=0)
-    r.publish('hola_mundo', "hola mundo")
+    # form_json = {
+    #     'titulo': form.cleaned_data.get('titulo'),
+    #     'contenido': form.cleaned_data.get('contenido')
+    # }
+
     if request.method == "POST":
         form = NoticiaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            form_json = {
+                'titulo': form.cleaned_data.get('titulo'),
+                'contenido': form.cleaned_data.get('contenido')
+            }
+            r.publish('mundo', json.dumps(form_json))
             return redirect(reverse_lazy('noticia:listado_paginas'))
     else:
         form = NoticiaForm()
